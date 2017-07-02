@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.zuzia.tetris.MainActivity"
+    android:background="@drawable/background1"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="35dp"
+    android:id="@+id/layoutMainActivity">
+
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:layout_height="752px"
+         android:paddingLeft="7px"
+         android:paddingTop="7px"
+         android:background="@drawable/border">
+
+          <fragment
+              class="com.example.zuzia.tetris.Tetris"
+              android:id="@+id/tetris"
+              android:layout_width="369px"
+              android:layout_height="match_parent"
+              tools:layout="@layout/fragment_tetris"
+              android:layout_centerVertical="true" />
+
+          <RelativeLayout
+              android:layout_width="1000px"
+              android:layout_height="1000px"
+              android:layout_marginLeft="369px"
+              android:background="@drawable/border"
+              android:paddingLeft="9px">
+
+               <TextView
+                   android:layout_width="100sp"
+                   android:layout_height="30sp"
+                   android:text="Score"
+                   android:id="@+id/score"
+                   android:textColor="#dcd9d9"
+                   android:textSize="18sp" />
+
+               <TextView
+                   android:layout_width="100sp"
+                   android:layout_height="30sp"
+                   android:text="0"
+                   android:id="@+id/textScore"
+                   android:textColor="#dcd9d9"
+                   android:textSize="18sp"
+                   android:layout_below="@+id/score" />
+
+               <TextView
+                   android:layout_width="100sp"
+                   android:layout_height="30sp"
+                   android:text="Lvl"
+                   android:id="@+id/lvl"
+                   android:textColor="#dcd9d9"
+                   android:textSize="18sp"
+                   android:layout_below="@+id/textScore"
+                   android:layout_marginTop="5sp"/>
+
+               <TextView
+                   android:layout_width="100sp"
+                   android:layout_height="30sp"
+                   android:text="1"
+                   android:id="@+id/textLvl"
+                   android:textColor="#dcd9d9"
+                   android:textSize="18sp"
+                   android:layout_below="@+id/lvl" />
+
+               <TextView
+                   android:layout_width="100sp"
+                   android:layout_height="30sp"
+                   android:text="Next"
+                   android:id="@+id/next"
+                   android:textColor="#dcd9d9"
+                   android:textSize="18sp"
+                   android:layout_below="@+id/textLvl"
+                   android:layout_marginTop="5sp"/>
+
+               <Button
+                   android:layout_width="25px"
+                   android:layout_height="25px"
+                   android:id="@+id/blockNextMain"
+                   android:background="#ff80cbc4"
+                   android:layout_centerHorizontal="true"
+                   android:layout_below="@+id/next"
+                   android:layout_marginTop="5sp" />
+
+               <Button
+                   android:layout_width="25px"
+                   android:layout_height="25px"
+                   android:id="@+id/blockNext1"
+                   android:background="#ff80cbc4"
+                   android:layout_centerHorizontal="true"
+                   android:layout_below="@+id/next"
+                   android:layout_marginTop="5sp"/>
+
+               <Button
+                   android:layout_width="25px"
+                   android:layout_height="25px"
+                   android:id="@+id/blockNext2"
+                   android:background="#ff80cbc4"
+                   android:layout_centerHorizontal="true"
+                   android:layout_below="@+id/next"
+                   android:layout_marginTop="5sp" />
+
+               <Button
+                   android:layout_width="25px"
+                   android:layout_height="25px"
+                   android:id="@+id/blockNext3"
+                   android:background="#ff80cbc4"
+                   android:layout_centerHorizontal="true"
+                   android:layout_below="@+id/next"
+                   android:layout_marginTop="5sp" />
+
+          </RelativeLayout>
+
+     </RelativeLayout>
+
+</RelativeLayout>
