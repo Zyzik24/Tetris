@@ -20,6 +20,7 @@ public class Figure {
         this.block2=block2;
         this.block3=block3;
         rotable=true;
+        number=0;
     }
 
     public void moveFigure(int initialBlockDiff)

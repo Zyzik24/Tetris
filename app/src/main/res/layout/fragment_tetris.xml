@@ -8,7 +8,7 @@
             android:id="@+id/drawer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/background1" />
+            android:background="@drawable/background" />
 
         <Button
             android:layout_width="35px"
@@ -33,5 +33,29 @@
             android:layout_height="35px"
             android:id="@+id/block3"
             android:background="#ff80cbc4" />
+
+        <Button
+            android:layout_width="35px"
+            android:layout_height="35px"
+            android:id="@+id/blockGhostMain"
+            android:background="#4ddcd9d9" />
+
+        <Button
+            android:layout_width="35px"
+            android:layout_height="35px"
+            android:id="@+id/blockGhost1"
+            android:background="#4ddcd9d9"/>
+
+        <Button
+            android:layout_width="35px"
+            android:layout_height="35px"
+            android:id="@+id/blockGhost2"
+            android:background="#4ddcd9d9"/>
+
+        <Button
+            android:layout_width="35px"
+            android:layout_height="35px"
+            android:id="@+id/blockGhost3"
+            android:background="#4ddcd9d9" />
 
 </FrameLayout>

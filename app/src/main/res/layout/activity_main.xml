@@ -5,118 +5,249 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.zuzia.tetris.MainActivity"
-    android:background="@drawable/background1"
+    android:background="#2d2c2c"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="35dp"
     android:id="@+id/layoutMainActivity">
 
-     <RelativeLayout
-         android:layout_width="match_parent"
-         android:layout_height="752px"
-         android:paddingLeft="7px"
-         android:paddingTop="7px"
-         android:background="@drawable/border">
+     <com.google.android.gms.ads.AdView
+         xmlns:ads="http://schemas.android.com/apk/res-auto"
+         android:id="@+id/adView2"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_centerHorizontal="true"
+         ads:adSize="BANNER"
+         ads:adUnitId="@string/banner_ad_unit_id">
+     </com.google.android.gms.ads.AdView>
 
-          <fragment
-              class="com.example.zuzia.tetris.Tetris"
-              android:id="@+id/tetris"
-              android:layout_width="369px"
-              android:layout_height="match_parent"
-              tools:layout="@layout/fragment_tetris"
-              android:layout_centerVertical="true" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="55dp">
 
-          <RelativeLayout
-              android:layout_width="1000px"
-              android:layout_height="1000px"
-              android:layout_marginLeft="369px"
-              android:background="@drawable/border"
-              android:paddingLeft="9px">
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="752px"
+             android:paddingLeft="7px"
+             android:paddingTop="7px"
+             android:paddingBottom="7px"
+             android:background="@drawable/border"
+             android:id="@+id/relativeLayout">
 
-               <TextView
-                   android:layout_width="100sp"
-                   android:layout_height="30sp"
-                   android:text="Score"
-                   android:id="@+id/score"
-                   android:textColor="#dcd9d9"
-                   android:textSize="18sp" />
+              <RelativeLayout
+                  android:layout_width="369px"
+                  android:layout_height="match_parent"
+                  android:background="#00000000"
+                  android:id="@+id/layoutTetris">
 
-               <TextView
-                   android:layout_width="100sp"
-                   android:layout_height="30sp"
-                   android:text="0"
-                   android:id="@+id/textScore"
-                   android:textColor="#dcd9d9"
-                   android:textSize="18sp"
-                   android:layout_below="@+id/score" />
+                   <fragment
+                       class="com.example.zuzia.tetris.Tetris"
+                       android:id="@+id/tetris"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       tools:layout="@layout/fragment_tetris"
+                       android:layout_centerVertical="true" />
 
-               <TextView
-                   android:layout_width="100sp"
-                   android:layout_height="30sp"
-                   android:text="Lvl"
-                   android:id="@+id/lvl"
-                   android:textColor="#dcd9d9"
-                   android:textSize="18sp"
-                   android:layout_below="@+id/textScore"
-                   android:layout_marginTop="5sp"/>
+              </RelativeLayout>
 
-               <TextView
-                   android:layout_width="100sp"
-                   android:layout_height="30sp"
-                   android:text="1"
-                   android:id="@+id/textLvl"
-                   android:textColor="#dcd9d9"
-                   android:textSize="18sp"
-                   android:layout_below="@+id/lvl" />
+              <RelativeLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:layout_toRightOf="@+id/layoutTetris"
+                  android:background="@drawable/borderinfo"
+                  android:paddingLeft="9px">
 
-               <TextView
-                   android:layout_width="100sp"
-                   android:layout_height="30sp"
-                   android:text="Next"
-                   android:id="@+id/next"
-                   android:textColor="#dcd9d9"
-                   android:textSize="18sp"
-                   android:layout_below="@+id/textLvl"
-                   android:layout_marginTop="5sp"/>
+                   <TextView
+                       android:layout_width="100sp"
+                       android:layout_height="30sp"
+                       android:text="Score"
+                       android:id="@+id/score"
+                       android:textColor="#dcd9d9"
+                       android:textSize="18sp" />
 
-               <Button
-                   android:layout_width="25px"
-                   android:layout_height="25px"
-                   android:id="@+id/blockNextMain"
-                   android:background="#ff80cbc4"
-                   android:layout_centerHorizontal="true"
-                   android:layout_below="@+id/next"
-                   android:layout_marginTop="5sp" />
+                   <TextView
+                       android:layout_width="100sp"
+                       android:layout_height="30sp"
+                       android:text="0"
+                       android:id="@+id/textScore"
+                       android:textColor="#dcd9d9"
+                       android:textSize="18sp"
+                       android:layout_below="@+id/score" />
 
-               <Button
-                   android:layout_width="25px"
-                   android:layout_height="25px"
-                   android:id="@+id/blockNext1"
-                   android:background="#ff80cbc4"
-                   android:layout_centerHorizontal="true"
-                   android:layout_below="@+id/next"
-                   android:layout_marginTop="5sp"/>
+                   <TextView
+                       android:layout_width="100sp"
+                       android:layout_height="30sp"
+                       android:text="Lvl"
+                       android:id="@+id/lvl"
+                       android:textColor="#dcd9d9"
+                       android:textSize="18sp"
+                       android:layout_below="@+id/textScore"
+                       android:layout_marginTop="5sp"/>
 
-               <Button
-                   android:layout_width="25px"
-                   android:layout_height="25px"
-                   android:id="@+id/blockNext2"
-                   android:background="#ff80cbc4"
-                   android:layout_centerHorizontal="true"
-                   android:layout_below="@+id/next"
-                   android:layout_marginTop="5sp" />
+                   <TextView
+                       android:layout_width="100sp"
+                       android:layout_height="30sp"
+                       android:text="1"
+                       android:id="@+id/textLvl"
+                       android:textColor="#dcd9d9"
+                       android:textSize="18sp"
+                       android:layout_below="@+id/lvl" />
 
-               <Button
-                   android:layout_width="25px"
-                   android:layout_height="25px"
-                   android:id="@+id/blockNext3"
-                   android:background="#ff80cbc4"
-                   android:layout_centerHorizontal="true"
-                   android:layout_below="@+id/next"
-                   android:layout_marginTop="5sp" />
+                   <TextView
+                       android:layout_width="100sp"
+                       android:layout_height="30sp"
+                       android:text="Next"
+                       android:id="@+id/next"
+                       android:textColor="#dcd9d9"
+                       android:textSize="18sp"
+                       android:layout_below="@+id/textLvl"
+                       android:layout_marginTop="5sp"/>
 
-          </RelativeLayout>
+                   <Button
+                       android:layout_width="25px"
+                       android:layout_height="25px"
+                       android:id="@+id/blockNextMain"
+                       android:background="#ff80cbc4"
+                       android:layout_centerHorizontal="true"
+                       android:layout_below="@+id/next"
+                       android:layout_marginTop="5sp" />
 
-     </RelativeLayout>
+                   <Button
+                       android:layout_width="25px"
+                       android:layout_height="25px"
+                       android:id="@+id/blockNext1"
+                       android:background="#ff80cbc4"
+                       android:layout_centerHorizontal="true"
+                       android:layout_below="@+id/next"
+                       android:layout_marginTop="5sp"/>
+
+                   <Button
+                       android:layout_width="25px"
+                       android:layout_height="25px"
+                       android:id="@+id/blockNext2"
+                       android:background="#ff80cbc4"
+                       android:layout_centerHorizontal="true"
+                       android:layout_below="@+id/next"
+                       android:layout_marginTop="5sp" />
+
+                   <Button
+                       android:layout_width="25px"
+                       android:layout_height="25px"
+                       android:id="@+id/blockNext3"
+                       android:background="#ff80cbc4"
+                       android:layout_centerHorizontal="true"
+                       android:layout_below="@+id/next"
+                       android:layout_marginTop="5sp" />
+
+                   <Button
+                       android:layout_width="match_parent"
+                       android:layout_marginRight="7dp"
+                       android:layout_height="40dp"
+                       android:text="Pause"
+                       android:id="@+id/buttonPause"
+                       android:layout_marginTop="30dp"
+                       android:layout_below="@+id/blockNextMain"
+                       android:layout_alignParentLeft="true"
+                       android:layout_alignParentStart="true"
+                       android:background="@drawable/buttonghost"
+                       android:onClick="pauseClick"
+                       android:textColor="#dcd9d9"
+                       android:textSize="18sp"
+                       android:gravity="center_vertical|center_horizontal" />
+
+                   <Button
+                       android:layout_width="match_parent"
+                       android:layout_marginRight="7dp"
+                       android:layout_height="40dp"
+                       android:text="Ghost"
+                       android:id="@+id/buttonGhost"
+                       android:layout_marginTop="5dp"
+                       android:layout_below="@+id/buttonPause"
+                       android:layout_alignParentLeft="true"
+                       android:layout_alignParentStart="true"
+                       android:background="@drawable/buttonghost"
+                       android:onClick="ghostClick"
+                       android:textColor="#dcd9d9"
+                       android:textSize="18sp"
+                       android:gravity="center_vertical|center_horizontal" />
+
+                   <Button
+                       android:layout_width="match_parent"
+                       android:layout_marginRight="7dp"
+                       android:layout_height="40dp"
+                       android:text="Restart"
+                       android:id="@+id/buttonRestart"
+                       android:layout_marginTop="5dp"
+                       android:layout_below="@+id/buttonGhost"
+                       android:layout_alignParentLeft="true"
+                       android:layout_alignParentStart="true"
+                       android:background="@drawable/button"
+                       android:onClick="restartClick"
+                       android:textColor="#dcd9d9"
+                       android:textSize="18sp"
+                       android:gravity="center_vertical|center_horizontal" />
+
+                   <Button
+                       android:layout_width="match_parent"
+                       android:layout_marginRight="7dp"
+                       android:layout_height="40dp"
+                       android:text="Ranking"
+                       android:id="@+id/buttonExit"
+                       android:layout_marginTop="5dp"
+                       android:layout_below="@+id/buttonRestart"
+                       android:layout_alignParentLeft="true"
+                       android:layout_alignParentStart="true"
+                       android:background="@drawable/button"
+                       android:onClick="rankingClick"
+                       android:textColor="#dcd9d9"
+                       android:textSize="18sp"
+                       android:gravity="center_vertical|center_horizontal" />
+
+
+              </RelativeLayout>
+
+         </RelativeLayout>
+
+         <ImageButton
+             android:layout_width="70dp"
+             android:layout_height="50dp"
+             android:id="@+id/buttonLeft"
+             android:layout_below="@+id/relativeLayout"
+             android:background="#00FFFFFF"
+             android:src="@drawable/lefta"/>
+
+         <ImageButton
+             android:layout_width="70dp"
+             android:layout_height="50dp"
+             android:id="@+id/buttonRight"
+             android:layout_marginLeft="30dp"
+             android:layout_alignTop="@+id/buttonLeft"
+             android:layout_toRightOf="@+id/buttonLeft"
+             android:background="#00FFFFFF"
+             android:src="@drawable/righta" />
+
+         <ImageButton
+             android:layout_width="70dp"
+             android:layout_height="50dp"
+             android:id="@+id/buttonRote"
+             android:layout_marginLeft="30dp"
+             android:layout_alignTop="@+id/buttonRight"
+             android:layout_toRightOf="@+id/buttonRight"
+             android:background="#00FFFFFF"
+             android:src="@drawable/rotea"/>
+
+         <ImageButton
+             android:layout_width="70dp"
+             android:layout_height="50dp"
+             android:id="@+id/buttonDown"
+             android:layout_marginLeft="35dp"
+             android:layout_alignTop="@+id/buttonRote"
+             android:layout_toRightOf="@+id/buttonRote"
+             android:background="#00FFFFFF"
+             android:src="@drawable/downa"/>
+
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

@@ -1,6 +1,6 @@
 package com.example.zuzia.tetris;
 
-
+import android.graphics.drawable.GradientDrawable;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -8,105 +8,87 @@ public class ColorBackground {
 
     public TextView textLvl;
     private Drawer drawer;
-    private RelativeLayout layoutMainActivity;
 
-    public ColorBackground(TextView textLvl, Drawer drawer,RelativeLayout layoutMainActivity)
+    public ColorBackground(TextView textLvl, Drawer drawer)
     {
         this.textLvl=textLvl;
         this.drawer=drawer;
-        this.layoutMainActivity=layoutMainActivity;
     }
 
-    public void moveColor()
+    private int getCenterColor()
     {
-        int lvl= Integer.parseInt(textLvl.getText().toString())%20;
-        int gradient = R.drawable.background1;
-        switch (lvl)
+        int lvl = Integer.parseInt(textLvl.getText().toString()) % 20;
+            switch (lvl)
         {
             case 0:
-                gradient=R.drawable.background20;
-                break;
+                return 0xff9d88af;
 
             case 1:
-                gradient=R.drawable.background1;
-                break;
+                return 0xff5D5D5F;
 
             case 2:
-                gradient=R.drawable.background2;
-                break;
+                return 0xffbfbffa;
 
             case 3:
-                gradient=R.drawable.background3;
-                break;
+                return  0xffa4e0fa;
 
             case 4:
-                gradient=R.drawable.background4;
-                break;
+                return 0xffbbf9d8;
 
             case 5:
-                gradient=R.drawable.background5;
-                break;
+                return 0xfff7ddad;
 
             case 6:
-                gradient=R.drawable.background6;
-                break;
+                return 0xffedaca9;
 
             case 7:
-                gradient=R.drawable.background7;
-                break;
+                return 0xfffaf9b7;
 
             case 8:
-                gradient=R.drawable.background8;
-                break;
+                return 0xffffffff;
 
             case 9:
-                gradient=R.drawable.background9;
-                break;
+                return 0xffb6abac;
 
             case 10:
-                gradient=R.drawable.background10;
-                break;
+                return 0xfff9ddfa;
 
             case 11:
-                gradient=R.drawable.background11;
-                break;
+                return 0xfff5a573;
 
             case 12:
-                gradient=R.drawable.background12;
-                break;
+                return 0xff818c84;
 
             case 13:
-                gradient=R.drawable.background13;
-                break;
+                return 0xffefe0df;
 
             case 14:
-                gradient=R.drawable.background14;
-                break;
+                return 0xff8d8db6;
 
             case 15:
-                gradient=R.drawable.background15;
-                break;
+                return 0xffe9bffa;
 
             case 16:
-                gradient=R.drawable.background16;
-                break;
+                return 0xff66969b;
 
             case 17:
-                gradient=R.drawable.background17;
-                break;
+                return 0xffbeb58a;
 
             case 18:
-                gradient=R.drawable.background18;
-                break;
+                return 0xffe1e1e1;
 
             case 19:
-                gradient=R.drawable.background19;
-                break;
-
+                return 0xffce8e93;
         }
+        return 0xFF5D5D5F;
+    }
 
-        layoutMainActivity.setBackgroundResource(gradient);
-        drawer.setBackgroundResource(gradient);
+    public void moveGradient() {
+        int[] color = {0xFF37373E, getCenterColor(), 0xFF000000};
+        GradientDrawable gradient = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, color);
+        drawer.setBackgroundDrawable(gradient);
     }
 
 }
+
+

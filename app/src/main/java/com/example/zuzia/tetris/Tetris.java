@@ -1,6 +1,5 @@
 package com.example.zuzia.tetris;
 
-
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -17,18 +16,51 @@ public class Tetris extends Fragment {
     private Button block1;
     private Button block2;
     private Button block3;
-    private int initialBlockDiff; //początkowa wartość potrzebna do ustawienia figury
-    private Drawer drawer;
+    public int initialBlockDiff; //początkowa wartość potrzebna do ustawienia figury
+    public Drawer drawer;
+    private float blockMainX;
+    private float blockMainY;
+    public int number=0;
+
+    public Ghost ghostClass;
+
+    private float block1X=0;//to tylko do zapisu
+    private float block1Y=0;
+    private float block2X=0;
+    private float block2Y=0;
+    private float block3X=0;
+    private float block3Y=0;
+    public boolean ghost=false;
+    public boolean pause =false;//brak działania po pauzie
+
     public long speed;//publiczne używane są w Mainactivity
     public View view;
     public Figure figure;
+    public boolean lose =false;
     public TextView textScore;//nie są we fragmancie, są w MainActivity
     public TextView textLvl;
-    public RelativeLayout layoutMainActivity;
+
+    public SizeView sizeView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        if(savedInstanceState!=null)//wznowienie
+        {
+            blockMainX= savedInstanceState.getFloat("blockMainX");
+            blockMainY= savedInstanceState.getFloat("blockMainY");
+            block1X= savedInstanceState.getFloat("block1X");
+            block1Y= savedInstanceState.getFloat("block1Y");
+            block2X= savedInstanceState.getFloat("block2X");
+            block2Y= savedInstanceState.getFloat("block2Y");
+            block3X= savedInstanceState.getFloat("block3X");
+            block3Y= savedInstanceState.getFloat("block3Y");
+            lose =savedInstanceState.getBoolean("lose", lose);
+            number=savedInstanceState.getInt("number", number);
+            ghost=savedInstanceState.getBoolean("ghost", ghost);
+            pause =savedInstanceState.getBoolean("pause", pause);
+        }
         return inflater.inflate(R.layout.fragment_tetris, container, false);
     }
 
@@ -36,34 +68,121 @@ public class Tetris extends Fragment {
     public void onStart() {
         super.onStart();
         view=getView();
+
         drawer = (Drawer) view.findViewById(R.id.drawer);
         blockMain= (Button)view.findViewById(R.id.blockMain);
         block1= (Button)view.findViewById(R.id.block1);
         block2= (Button)view.findViewById(R.id.block2);
         block3= (Button)view.findViewById(R.id.block3);
+
+        initialBlockDiff= sizeView.initialBlockDiff;
+        drawer.initialBlockDiff= initialBlockDiff;
+
+        ghostClass = new Ghost(this);
+
+        sizeView.sizeblocks(blockMain, block1, block2, block3);
+        sizeView.sizeblocks(ghostClass.getBlockGhostMain(), ghostClass.getBlockGhost1(), ghostClass.getBlockGhost2(), ghostClass.getBlockGhost3());
+
         figure = new Figure(blockMain,block1,block2,block3);
-        initialBlockDiff=37;
-        speed=1000;
-        blockMain.setX(5*initialBlockDiff);
-        blockMain.setY(0);
-        figure.randomNumber();
-        figure.moveFigure(initialBlockDiff);
+        startDo();
     }
 
+    private void startDo()
+    {
+        speed=1000-100*(Integer.parseInt(textLvl.getText().toString())-1);
+        ColorBackground colorBackground = new ColorBackground(textLvl, drawer);
+        colorBackground.moveGradient();
 
-    public void moveFigureVertical(MotionEvent e1, MotionEvent e2)
+        if(number==0)
+        {
+            blockMain.setX(initialBlockDiff*5);
+            blockMain.setY(0);
+            figure.randomNumber();
+            number=figure.number;
+            figure.moveFigure(initialBlockDiff);
+        }
+        else
+        {
+            blockMain.setX(blockMainX);
+            blockMain.setY(blockMainY);
+            figure.number=number;
+            figure.moveFigure(initialBlockDiff);//po zapisie
+            block1.setX(block1X);
+            block1.setY(block1Y);
+            block2.setX(block2X);
+            block2.setY(block2Y);
+            block3.setX(block3X);
+            block3.setY(block3Y);
+        }
+
+        if (ghost)
+        {
+            ghostBlockMoveHorizontal();
+            ghostClass.ghostBlocksVisible();
+        }
+        else
+        {
+            ghostClass.ghostBlocksInVisible();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        //zapis
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putFloat("blockMainX",blockMainX);
+        savedInstanceState.putFloat("blockMainY",blockMainY);
+        savedInstanceState.putFloat("block1X",block1X);
+        savedInstanceState.putFloat("block1Y",block1Y);
+        savedInstanceState.putFloat("block2X",block2X);
+        savedInstanceState.putFloat("block2Y",block2Y);
+        savedInstanceState.putFloat("block3X",block3X);
+        savedInstanceState.putFloat("block3Y",block3Y);
+        savedInstanceState.putBoolean("lose", lose);
+        savedInstanceState.putInt("number", number);
+        savedInstanceState.putBoolean("ghost", ghost);
+        savedInstanceState.putBoolean("pause", pause);
+    }
+
+    public void onPause()
+    {
+        //zapis
+        super.onPause();
+        blockMainX=blockMain.getX();
+        blockMainY=blockMain.getY();
+        block1X=block1.getX();
+        block1Y=block1.getY();
+        block2X=block2.getX();
+        block2Y=block2.getY();
+        block3X=block3.getX();
+        block3Y=block3.getY();
+    }
+
+    public void moveFigureVertical(MotionEvent e1, MotionEvent e2, float distance)
     {
          //przesuwanie w osi X;
-        if(e2.getX()-e1.getX()>initialBlockDiff && rightBlocks() && fallBlocks())
+        if(!lose && !pause)
         {
-            moveDistance(initialBlockDiff);
-            e1.setLocation(e2.getX(),e2.getY());
+            if(distance>initialBlockDiff && rightBlocks())
+            {
+                moveDistance(initialBlockDiff);
+                if(e1!=null)
+                {
+                    e1.setLocation(e2.getX(),e2.getY());
+                }
+            }
+            if(distance<-initialBlockDiff && leftBlocks())
+            {
+                moveDistance(-initialBlockDiff);
+                if(e1!=null)
+                {
+                    e1.setLocation(e2.getX(),e2.getY());
+                }
+            }
         }
-        if(e2.getX()-e1.getX()<-initialBlockDiff && leftBlocks() && fallBlocks())
-        {
-            moveDistance(-initialBlockDiff);
-            e1.setLocation(e2.getX(),e2.getY());
-        }
+        if (ghost)
+            ghostBlockMoveHorizontal();
+
     }
 
     private void moveDistance(int distance)
@@ -110,22 +229,22 @@ public class Tetris extends Fragment {
 
     public void moveHorizontalFall()
     {
-        blockMain.setY(blockMain.getY()+initialBlockDiff);
-        block1.setY(block1.getY()+initialBlockDiff);
-        block2.setY(block2.getY()+initialBlockDiff);
-        block3.setY(block3.getY()+initialBlockDiff);
+            blockMain.setY(blockMain.getY() + initialBlockDiff);
+            block1.setY(block1.getY() + initialBlockDiff);
+            block2.setY(block2.getY() + initialBlockDiff);
+            block3.setY(block3.getY() + initialBlockDiff);
     }
 
     public void moveHorizontalNotFall()
     {
-        sendDrawData(blockMain);
-        sendDrawData(block1);
-        sendDrawData(block2);
-        sendDrawData(block3);
-        sortByYBlocks();
-        speed=1000-100*(Integer.parseInt(textLvl.getText().toString())-1);
-        blockMain.setX(5*initialBlockDiff);
-        blockMain.setY(0);
+            sendDrawData(blockMain);
+            sendDrawData(block1);
+            sendDrawData(block2);
+            sendDrawData(block3);
+            sortByYBlocks();
+            speed=1000-100*(Integer.parseInt(textLvl.getText().toString())-1);
+            blockMain.setX(5*initialBlockDiff);
+            blockMain.setY(0);
     }
 
     public boolean fallBlocks()
@@ -136,7 +255,7 @@ public class Tetris extends Fragment {
         return false;
     }
 
-    private boolean fallBlock(Button block, int chracter)
+    public boolean fallBlock(Button block, int chracter)
     {
         //sprawdza czy może spaść jeden kwadracik
         if((drawer.isAboveDrawBlock(block) || block.getY()+initialBlockDiff==initialBlockDiff*20) && chracter==1)
@@ -146,16 +265,20 @@ public class Tetris extends Fragment {
         return true;
     }
 
+    private DrawerSquare getDrawBlock(Button block)
+    {
+       return  new DrawerSquare(new RectF(block.getX(),block.getY() , block.getX()+initialBlockDiff-2, block.getY()+initialBlockDiff-2), figure.color);
+    }
+
     private void sendDrawData(Button block)
     {
         //wysyłanie obiektu do narysowania
-        DrawerSquare drawBlock = new DrawerSquare(new RectF(block.getX(), block.getY()+initialBlockDiff-2, block.getX()+initialBlockDiff-2, block.getY()), figure.color);
-        drawer.drawBlock(drawBlock);
+        drawer.drawBlock(getDrawBlock(block));
     }
 
     private void sortByYBlocks()
     {
-        //sportowanie przez Zyzika (żeby nie spadały te co są ma dole
+        //sportowanie przez Zyzika (żeby nie spadały te co są na dole
         Button tab[] = new Button[4];
         tab[0]=blockMain;
         tab[1]=block1;
@@ -191,15 +314,14 @@ public class Tetris extends Fragment {
     private void sendDrawDataDown(Button block)
     {
         //wysyłanie obiektu do usuwania i przesunięcia w dół i dodawania pkt.
-        DrawerSquare drawBlock = new DrawerSquare(new RectF(block.getX(), block.getY()+initialBlockDiff-2, block.getX()+initialBlockDiff-2, block.getY()), figure.color);
-        ColorBackground colorBackground = new ColorBackground(textLvl, drawer, layoutMainActivity);
-        drawer.DrawBlockDown(drawBlock, textScore, colorBackground);
+        ColorBackground colorBackground = new ColorBackground(textLvl, drawer);
+        drawer.DrawBlockDown(getDrawBlock(block), textScore, colorBackground);
     }
 
     public void changeRotation()
     {
         //obrót figury
-        if(figure.rotable)
+        if(figure.rotable && !pause)
         {
             int i=0;
             do {
@@ -210,6 +332,8 @@ public class Tetris extends Fragment {
 
             }while (!isOutOfScope() && i<4);
         }
+        if (ghost)
+            ghostBlockMoveHorizontal();
     }
 
     private void rotationBlock(Button block)
@@ -297,4 +421,18 @@ public class Tetris extends Fragment {
         return false;
     }
 
+    public void restartGame()
+    {
+        lose=false;
+        drawer.clearlist();
+        textLvl.setText("1");
+        textScore.setText("0");
+        number=0;
+        startDo();
+    }
+
+    public void ghostBlockMoveHorizontal()
+    {
+        ghostClass.ghostBlockMoveHorizontal(blockMain, block1, block2, block3, initialBlockDiff);
+    }
 }

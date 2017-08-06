@@ -15,13 +15,12 @@ public class Drawer extends SurfaceView implements SurfaceHolder.Callback {
 
     ArrayList<DrawerSquare> punkty;
     Paint paint = new Paint();
-    int initialBlockDiff;
+    public int initialBlockDiff;
 
     public Drawer(Context context, AttributeSet attrs) {
         super(context, attrs);
         punkty = new ArrayList<DrawerSquare>();
         paint = new Paint();
-        initialBlockDiff=37;
     }
 
     @Override
@@ -53,10 +52,10 @@ public class Drawer extends SurfaceView implements SurfaceHolder.Callback {
     private void clearWin(DrawerSquare blockDraw)
     {
         for (DrawerSquare punkt : punkty) {
-            if(blockDraw.blockDraw.bottom>punkt.blockDraw.bottom)
+            if(blockDraw.blockDraw.top>punkt.blockDraw.top)
             {
-                punkt.blockDraw.bottom=punkt.blockDraw.bottom+initialBlockDiff;
                 punkt.blockDraw.top=punkt.blockDraw.top+initialBlockDiff;
+                punkt.blockDraw.bottom=punkt.blockDraw.bottom+initialBlockDiff;
             }
         }
     }
@@ -66,7 +65,7 @@ public class Drawer extends SurfaceView implements SurfaceHolder.Callback {
         DrawerSquare tab[] = new DrawerSquare[11];
         int i=0;
         for (DrawerSquare punkt : punkty) {
-            if(blockDraw.blockDraw.bottom==punkt.blockDraw.bottom)
+            if(blockDraw.blockDraw.top==punkt.blockDraw.top)
             {
                 tab[i]=punkt;
                 i++;
@@ -81,11 +80,11 @@ public class Drawer extends SurfaceView implements SurfaceHolder.Callback {
             clearWin(blockDraw);
             int score=Integer.parseInt(textScore.getText().toString())+50;
             textScore.setText(score+"");
-            if(score%500==0)
+            if(score%1000==0)
             {
                 int lvl=Integer.parseInt(colorBackground.textLvl.getText().toString())+1;
                 colorBackground.textLvl.setText(lvl+"");
-                colorBackground.moveColor();
+                colorBackground.moveGradient();
             }
         }
         invalidate();
@@ -95,7 +94,7 @@ public class Drawer extends SurfaceView implements SurfaceHolder.Callback {
     {
         //sprawdza czy dół buttona łączy się z górą, któregoś z rysunków
         for (DrawerSquare punkt : punkty) {
-            if(block.getY()+initialBlockDiff==punkt.blockDraw.bottom && block.getX()==punkt.blockDraw.left)
+            if(block.getY()+initialBlockDiff==punkt.blockDraw.top && block.getX()==punkt.blockDraw.left)
                 return true;
         }
         return false;
@@ -105,7 +104,7 @@ public class Drawer extends SurfaceView implements SurfaceHolder.Callback {
     {
         //sprawdza czy prawy buttona łączy się z lewym, któregoś z rysunków
         for (DrawerSquare punkt : punkty) {
-            if(block.getX()+initialBlockDiff==punkt.blockDraw.left && block.getY()==punkt.blockDraw.bottom)
+            if(block.getX()+initialBlockDiff==punkt.blockDraw.left && block.getY()==punkt.blockDraw.top)
                 return true;
         }
         return false;
@@ -115,10 +114,16 @@ public class Drawer extends SurfaceView implements SurfaceHolder.Callback {
     {
         //sprawdza czy lewy buttona łączy się z prawym, któregoś z rysunków
         for (DrawerSquare punkt : punkty) {
-            if(block.getX()==punkt.blockDraw.right+2 && block.getY()==punkt.blockDraw.bottom)
+            if(block.getX()==punkt.blockDraw.right+2 && block.getY()==punkt.blockDraw.top)
                 return true;
         }
         return false;
+    }
+
+    public void clearlist()
+    {
+        punkty.clear();
+        invalidate();
     }
 
     protected void onDraw(Canvas canvas) {
