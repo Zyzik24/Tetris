@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="320dp"
+        android:layout_height="200dp"
+        android:background="@drawable/dialog">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/text"
+            android:layout_alignParentTop="true"
+            android:textColor="#dcd9d9"
+            android:textSize="24sp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"/>
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:text="Yes"
+            android:id="@+id/buttonYes"
+            android:background="@drawable/button"
+            android:layout_alignParentBottom="true"
+            android:textColor="#dcd9d9"
+            android:textSize="18sp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp" />
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:text="No"
+            android:id="@+id/buttonNo"
+            android:background="@drawable/button"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:textColor="#dcd9d9"
+            android:textSize="18sp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
