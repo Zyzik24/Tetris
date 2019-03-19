@@ -1,7 +1,9 @@
 package com.example.zuzia.tetris;
 
+import android.util.DisplayMetrics;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 public class SizeView {
@@ -11,20 +13,25 @@ public class SizeView {
     private RelativeLayout relativeLayout;
     private RelativeLayout layoutTetris;
     public int initialBlockDiff;
+    private MainActivity mainActivity;
 
-    SizeView( int width ,int height, RelativeLayout relativeLayout, RelativeLayout layoutTetris)
+    SizeView(MainActivity mainActivity)
     {
-        this.width=width;
-        this.height=height;
-        this.relativeLayout=relativeLayout;
-        this.layoutTetris=layoutTetris;
+        this.mainActivity=mainActivity;
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        mainActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        height=displayMetrics.heightPixels;
+        width=displayMetrics.widthPixels;
+        relativeLayout=(RelativeLayout) mainActivity.findViewById(R.id.relativeLayout);
+        layoutTetris=(RelativeLayout) mainActivity.findViewById(R.id.layoutTetris);
         initialBlockDiff=getInitialBlockDiff();
         moveSize();
     }
 
     private int getInitialBlockDiff()
     {
-        int w=width-170;
+        int w=width-width/3;
         String widthChar = ""+w;
         String widthString="";
 
@@ -34,7 +41,7 @@ public class SizeView {
         }
         w=Integer.parseInt(widthString+"0");
 
-        int h=height-220;
+        int h=height-(height/5);
         String heightChar = ""+h;
         String heightString="";
         for(int i=0; i<heightChar.length()-2; i++)
@@ -62,6 +69,7 @@ public class SizeView {
         relativeLayout.setLayoutParams(params);
         params = new RelativeLayout.LayoutParams(initialBlockDiff*10-1, initialBlockDiff*20-1);
         layoutTetris.setLayoutParams(params);
+        setImageButton();
     }
 
     public void sizeblocks (Button blockMain, Button block1, Button block2, Button block3)
@@ -78,5 +86,24 @@ public class SizeView {
         block.setLayoutParams(params);
     }
 
+    private void setImageButton()
+    {
+        ImageButton buttonLeft = (ImageButton) mainActivity.findViewById(R.id.buttonLeft);
+        ImageButton buttonRight = (ImageButton) mainActivity.findViewById(R.id.buttonRight);
+        ImageButton buttonDown = (ImageButton) mainActivity.findViewById(R.id.buttonDown);
+        ImageButton buttonRote = (ImageButton) mainActivity.findViewById(R.id.buttonRote);
+        int buttonWidth = (width-12)/4;
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(buttonWidth,height/9);
+        RelativeLayout.LayoutParams paramsDown = new RelativeLayout.LayoutParams(buttonWidth-buttonWidth/5,height/9);
+        buttonLeft.setLayoutParams(params);
+        buttonRight.setLayoutParams(params);
+        buttonDown.setLayoutParams(paramsDown);
+        buttonRote.setLayoutParams(params);
+        buttonLeft.setX(0);
+        buttonRight.setX(buttonWidth);
+        buttonDown.setX(3*buttonWidth+buttonWidth/5);
+        buttonRote.setX(2*buttonWidth);
+    }
 
 }
+

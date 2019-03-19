@@ -5,26 +5,21 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-
+import com.startapp.android.publish.adsCommon.StartAppAd;
+import com.startapp.android.publish.adsCommon.StartAppSDK;
 
 
 public class StartActivity extends AppCompatActivity {
 
-    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-        MobileAds.initialize(this, "ca-app-pub-7178724899379030~6121622001");
 
-        mAdView = (AdView) findViewById(R.id.adView);
-//        AdRequest adRequest = new AdRequest.Builder().build();
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("ca-app-pub-7178724899379030~6121622001").build();
-        mAdView.loadAd(adRequest);
+        StartAppSDK.init(this, "209010497", false);
+        StartAppAd.disableSplash();
+
     }
 
     public void playClick(View view) {
@@ -32,10 +27,21 @@ public class StartActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void rankingClicke(View view) {
+    public void rankingClick(View view) {
         Intent intent = new Intent(this,RankingActivity.class);
         startActivity(intent);
     }
 
 
+    public void ControlsClick(View view) {
+        Controls controls = new Controls(this,this);
+        controls.buildDialogControls();
+    }
+
+    public void privacyPolicyClick(View view)
+    {
+            PrivacyPolicy privacyPolicy = new PrivacyPolicy(this);
+            privacyPolicy.buildDialogPrivacyPolicy();
+
+    }
 }

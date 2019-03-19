@@ -118,4 +118,9 @@ public class OptionsButton{
                 },
                 mainActivity);
     }
+
+    public void controlsClick(Controls controls)
+    {
+       controls.buildDialogControls();
+    }
 }

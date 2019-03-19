@@ -1,7 +1,6 @@
 package com.example.zuzia.tetris;
 
 import android.graphics.drawable.GradientDrawable;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class ColorBackground {

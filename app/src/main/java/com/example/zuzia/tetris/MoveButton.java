@@ -10,10 +10,12 @@ public class MoveButton {
     private MainActivity mainActivity;
     private Runnable runnablePress;//do przesuwania figur przyciskami
     private final Handler handlerPress = new Handler();
+    private Controls controls;
 
-    MoveButton(final MainActivity mainActivity)
+    MoveButton(final MainActivity mainActivity, final Controls controls)
     {
         this.mainActivity=mainActivity;
+        this.controls=controls;
 
         final ImageButton buttonRight = (ImageButton) mainActivity.findViewById(R.id.buttonRight);
         buttonTouch(buttonRight, 100, R.drawable.righta, R.drawable.rightb);
@@ -25,6 +27,8 @@ public class MoveButton {
         buttonRote.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                if(!controls.getButtons())
+                    return true;
                 switch(event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         mainActivity.tetris.changeRotation();
@@ -43,6 +47,8 @@ public class MoveButton {
         buttonDown.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                if(!controls.getButtons())
+                    return true;
                 switch(event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         if(!mainActivity.tetris.pause)
@@ -69,6 +75,8 @@ public class MoveButton {
         button.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                if(!controls.getButtons())
+                    return true;
                 switch(event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         buttonMoveTime(distance);
@@ -91,7 +99,7 @@ public class MoveButton {
             @Override
             public void run() {
                 mainActivity.tetris.moveFigureVertical(null,null, distance);
-                handlerPress.postDelayed(this, 200);
+                handlerPress.postDelayed(this, 150);
             }
         };
         handlerPress.post(runnablePress);

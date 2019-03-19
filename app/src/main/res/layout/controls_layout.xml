@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="320dp"
+        android:layout_height="250dp"
+        android:background="@drawable/dialog"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Controls"
+            android:id="@+id/text"
+            android:layout_alignParentTop="true"
+            android:textColor="#dcd9d9"
+            android:textSize="24sp"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Gestures"
+            android:id="@+id/buttonGestures"
+            android:background="@drawable/buttonghost"
+            android:textColor="#dcd9d9"
+            android:textSize="20sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            />
+
+
+        <Button
+            android:layout_marginTop="10dp"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Buttons"
+            android:id="@+id/buttonButtons"
+            android:background="@drawable/buttonghost"
+            android:textColor="#dcd9d9"
+            android:textSize="20sp"
+            android:layout_above="@+id/buttonGestures"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_marginTop="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="OK"
+            android:id="@+id/buttonOK"
+            android:background="@drawable/button"
+            android:textColor="#dcd9d9"
+            android:textSize="18sp"
+            android:layout_above="@+id/buttonGestures"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+
+</RelativeLayout>

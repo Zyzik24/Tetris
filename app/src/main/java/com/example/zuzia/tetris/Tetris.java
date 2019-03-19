@@ -163,7 +163,7 @@ public class Tetris extends Fragment {
          //przesuwanie w osi X;
         if(!lose && !pause)
         {
-            if(distance>initialBlockDiff && rightBlocks())
+            if(distance>45 && rightBlocks())
             {
                 moveDistance(initialBlockDiff);
                 if(e1!=null)
@@ -171,7 +171,7 @@ public class Tetris extends Fragment {
                     e1.setLocation(e2.getX(),e2.getY());
                 }
             }
-            if(distance<-initialBlockDiff && leftBlocks())
+            if(distance<-45 && leftBlocks())
             {
                 moveDistance(-initialBlockDiff);
                 if(e1!=null)

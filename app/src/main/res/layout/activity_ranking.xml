@@ -37,17 +37,14 @@
         android:layout_marginTop="40dp"
         android:divider="#00000000"
         android:layout_marginLeft="100dp"
-        android:layout_above="@+id/adView3"/>
+        android:layout_above="@+id/startAppBanner"/>
 
-    <com.google.android.gms.ads.AdView
-        xmlns:ads="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/adView3"
+    <com.startapp.android.publish.ads.banner.Banner
+        android:id="@+id/startAppBanner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id">
-    </com.google.android.gms.ads.AdView>
+        android:layout_alignParentBottom="true">
+    </com.startapp.android.publish.ads.banner.Banner>
 
 </RelativeLayout>

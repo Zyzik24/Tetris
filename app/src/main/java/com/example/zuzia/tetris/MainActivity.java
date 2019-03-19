@@ -9,12 +9,10 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
+import com.startapp.android.publish.adsCommon.StartAppAd;
+import com.startapp.android.publish.adsCommon.StartAppSDK;
 
 
 public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
@@ -33,29 +31,26 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     private int howMove;//ilość perzesunieć przy połowicznym przesuwie
 
     private OptionsButton optionsButton;
-
-    private AdView mAdView;
+    private Controls controls;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MobileAds.initialize(this, "ca-app-pub-7178724899379030~6121622001");
+        StartAppSDK.init(this, "209010497", false);
+        StartAppAd.disableSplash();
 
-        mAdView = (AdView) findViewById(R.id.adView2);
-//        AdRequest adRequest = new AdRequest.Builder().build();
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("ca-app-pub-7178724899379030~6121622001").build();
-        mAdView.loadAd(adRequest);
+        controls=new Controls(this,this);
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
         tetris= (Tetris)getFragmentManager().findFragmentById(R.id.tetris);
-        SizeView sizeView = new SizeView(displayMetrics.widthPixels, displayMetrics.heightPixels, (RelativeLayout)findViewById(R.id.relativeLayout), (RelativeLayout)findViewById(R.id.layoutTetris));
+        SizeView sizeView = new SizeView(this);
         tetris.sizeView=sizeView;
 
-        MoveButton moveButton = new MoveButton(this);
+        MoveButton moveButton = new MoveButton(this, controls);
         optionsButton = new OptionsButton(this);
 
         blockNextMain=(Button)findViewById(R.id.blockNextMain);
@@ -151,14 +146,15 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     @Override
     public void onDestroy()
     {
-        super.onDestroy();
         putPreferences();
+        super.onDestroy();
     }
 
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        detector.onTouchEvent(event);
+        if(controls.getGestures())
+            detector.onTouchEvent(event);
         return true;
     }
 
@@ -220,5 +216,8 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         optionsButton.rankingClick();
     }
 
+    public void controlsClick(View view) {
+        optionsButton.controlsClick(controls);
+    }
 }
 
